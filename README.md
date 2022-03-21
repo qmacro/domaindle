@@ -6,7 +6,7 @@
 |____/ \___/|_| |_| |_|\__,_|_|_| |_|\__,_|_|\___|
 ```
 
-Domaindle - Guess 5 letter domains from the Data Dictionary!
+Domaindle - Guess 5-letter domains from the Data Dictionary!
 
 ## Running it
 
