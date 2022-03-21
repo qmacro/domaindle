@@ -1,0 +1,5 @@
+BUKRS,Buchungkreis,Company code
+WAERS,Waehrungsschluessel,Currency key
+AUART,Auftragsart,Sales order type
+MANDT,Mandant,Client
+LOEKZ,Loeschkennzeichen,Deletion flag
