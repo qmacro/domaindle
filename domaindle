@@ -33,6 +33,64 @@ explain() {
 
 }
 
+analyse() {
+
+  local selected=$1
+  local guess=$2
+
+  non_green=""
+  # Determine all the non-green letters
+  for ((i = 0; i < ${#selected}; i++)); do
+    if [[ "${selected:$i:1}" != "${guess:$i:1}" ]]; then
+      non_green+="${selected:$i:1}"
+    fi
+  done
+
+  # Go through each letter, and highlight depending on letter result
+  for ((i = 0; i < ${#selected}; i++)); do
+
+    letter=${guess:$i:1}
+
+    # Letter matches in right place -> green
+    if [[ "${selected:$i:1}" == "$letter" ]]; then
+      colour=$green
+    else
+
+      # Letter matches but not in right place -> yellow
+      # Also, remove that letter so we don't count it twice
+      if [[ "$non_green" == *"$letter"* ]]; then
+        colour=$yellow
+        non_green=${non_green/"$letter"/}
+
+      # Otherwise not a match at all -> white
+      else
+        colour=$white
+      fi
+    fi
+
+    # Display letter, colour-coded
+    echo -en "\033[30;10${colour:0:1}m $letter \033[0m"
+
+    [[ $guess_number -gt 0 ]] && sleep $reveal_delay
+
+    # Mark the letter in the alphabet appropriately
+    alphabet="${alphabet/${letter}/\\033[30;10${colour:1:1}m${letter}\\033[0m}"
+
+  done
+
+  echo -n " "
+
+  if [[ $guess == "$selected" ]]; then
+    echo "${remark[$guess_number - 1]}! "
+    return 0
+  else
+    ## Show letters used
+    echo -en "[${alphabet}] "
+    return 1
+  fi
+
+}
+
 main() {
 
   local domain_data selected_idx selected non_green colour longform description
@@ -56,63 +114,18 @@ main() {
   fi
 
   until [[ guess_number -ge guess_limit ]]; do
-    non_green=""
-    # Determine all the non-green letters
-    for ((i = 0; i < ${#selected}; i++)); do
-      if [[ "${selected:$i:1}" != "${guess:$i:1}" ]]; then
-        non_green+="${selected:$i:1}"
-      fi
-    done
 
-    # Go through each letter, and highlight depending on letter result
-    for ((i = 0; i < ${#selected}; i++)); do
-
-      letter=${guess:$i:1}
-
-      # Letter matches in right place -> green
-      if [[ "${selected:$i:1}" == "$letter" ]]; then
-        colour=$green
-      else
-
-        # Letter matches but not in right place -> yellow
-        # Also, remove that letter so we don't count it twice
-        if [[ "$non_green" == *"$letter"* ]]; then
-          colour=$yellow
-          non_green=${non_green/"$letter"/}
-
-        # Otherwise not a match at all -> white
-        else
-          colour=$white
-        fi
-      fi
-
-      # Display letter, colour-coded
-      echo -en "\033[30;10${colour:0:1}m $letter \033[0m"
-
-      [[ $guess_number -gt 0 ]] && sleep $reveal_delay
-
-      # Mark the letter in the alphabet appropriately
-      alphabet="${alphabet/${letter}/\\033[30;10${colour:1:1}m${letter}\\033[0m}"
-
-    done
-
-    # Show letters used
-    echo -en " [${alphabet}] "
+    if analyse "$selected" "$guess"; then
+      echo
+      explain "$selected" "$longform" "$description"
+      exit 0
+    fi
 
     # Receive guess, uppercase and pad to 5 chars
     guess_number=$((guess_number + 1))
     read -rp "Guess $guess_number/$guess_limit: " guess
     guess="${guess^^}     "
     guess="${guess:0:5}"
-
-    # If guess is correct, celebrate
-    if [[ $guess == "$selected" ]]; then
-
-      echo -n "${remark[$guess_number - 1]}! "
-      explain "$selected" "$longform" "$description"
-      exit 0
-
-    fi
 
   done
 
@@ -123,4 +136,3 @@ main() {
 }
 
 main "$@"
-
