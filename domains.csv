@@ -3,3 +3,9 @@ WAERS,Waehrungsschluessel,Currency key
 AUART,Auftragsart,Sales order type
 MANDT,Mandant,Client
 LOEKZ,Loeschkennzeichen,Deletion flag
+ANLAZ,Anlagezustand,System Condition
+EQART,Art des technishen Objekts,Type of technical objects
+EQUNR,Equipmentnummber,Equipment Number
+GROES,Groesse bzw Abmessung,Size or Dimension
+ILART,Instandhaltungsleistungsart,Maintenance Activity Type
+ARBPL,Arbeitsplatz,Work Centre
