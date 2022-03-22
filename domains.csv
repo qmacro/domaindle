@@ -2,27 +2,19 @@ ANLAZ,Anlagezustand,System Condition
 ARBPL,Arbeitsplatz,Work Centre
 AUART,Auftragsart,Sales order type
 BUKRS,Buchungkreis,Company code
-DMBTR,Deutschmarkbetrag,Amount in local currency
 EBELN,Einkaufsbelegnummer,Purchasing document number
 EBELP,Einkaufsbelegposition,Purchasing document item
 EQART,Art des technishen Objekts,Type of technical objects
 EQUNR,Equipmentnummer,Equipment Number
 FLDGP,Feldgruppe zur Gruppierung von einzelnen Feldern,Field group for grouping individual fields
-FLMNG,Fehlmenge der Komponente im Auftrag,Shortfall Quantity of Component in Order
 GROES,Groesse bzw Abmessung,Size or Dimension
 ILART,Instandhaltungsleistungsart,Maintenance Activity Type
 KNTNR,Knotennummer,Node Number
 KUNNR,Kundennummer,Customer number
-LOEKZ,Loeschkennzeichen,Deletion flag
-LOSGR,Planlosgrösse,Planned lot size
 MAHNT,Mahnungstagen,Dunning days
 MANDT,Mandant,Client
 MATKL,Materialklasse,Material class
-MATKZ,Materialzuordnung,Material Allocation
-PLNME,Planmengeneinheit,Task List Unit of Measure
-PLNTX,Beschreibung des Plantypen,Description of the Task List Type
 SHKZG,Soll/Haben Kennzeichnung,Debit/credit indicator
-TXTKZ,Langtext vorhanden,Long Text Exists
 UZEIT,Uhrzeit,Time
 VBELN,Verkaufsbelegnummer,Sales document number
 VKORG,Verkaufsorganization,Sales organisaion
