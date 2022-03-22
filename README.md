@@ -15,7 +15,7 @@ start out by using the `--clue` (or `-c`) option to get it to give you a clue as
 
 Here's an example session, running `domaindle` as a container:
 
-![Running domaindle as a container](sample.png)
+![Running domaindle as a container](assets/container.png)
 
 ### Locally
 
@@ -32,6 +32,10 @@ git clone https://github.com/qmacro/domaindle.git \
 ```bash
 docker run --rm -it qmacro/domaindle --clue
 ```
+
+### In Replit
+
+![Running domaindle in Replit](assets/replit.gif)
 
 ### Source domains
 
