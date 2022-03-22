@@ -3,3 +3,15 @@ WAERS,Waehrungsschluessel,Currency key
 AUART,Auftragsart,Sales order type
 MANDT,Mandant,Client
 LOEKZ,Loeschkennzeichen,Deletion flag
+VKORG,Verkaufsorganization,Sales organisaion
+VTWEG,Vertriebsweg,Distribution channel
+UZEIT,Uhrzeit,Time
+KUNNR,Kundennummer,Customer number
+DMBTR,Deutschmarkbetrag,Amount in local currency
+VBELN,Verkaufsbelegnummer,Sales document number
+SHKZG,Soll/Haben Kennzeichnung,Debit/credit indicator
+MAHNT,Mahnungstagen,Dunning days
+MATKL,Materialklasse,Material class
+WARPL,Wartungsplan,Maintenance plan
+EBELN,Einkaufsbelegnummer,Purchasing document number
+EBELP,Einkaugsbelegposition,Purchasing document item
