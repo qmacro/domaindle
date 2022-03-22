@@ -35,6 +35,8 @@ docker run --rm -it qmacro/domaindle --clue
 
 ### In Replit
 
+Fork the repo and then clone your forked repo into Replit. Here's an example of me cloning my repo into Replit:
+
 ![Running domaindle in Replit](assets/replit.gif)
 
 ### Source domains
