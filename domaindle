@@ -1,12 +1,20 @@
 #!/usr/bin/env bash
 
 set -eo pipefail
+
 declare domains_file=domains.csv
-declare guess_limit=6
 declare reveal_delay=0.3
 declare green=22 yellow=33 white=70
 declare alphabet=ABCDEFGHIJKLMNOPQRSTUVWXYZ
 declare remark=(Genius Magnificent Splendid Great Phew)
+
+declare guess_limit_easy=18
+declare guess_limit_normal=12
+declare guess_limit_hard=6
+
+# Default mode is 'normal' and no clue shown
+declare guess_limit=$guess_limit_normal
+declare showclue=
 
 trap exit INT
 
@@ -90,11 +98,57 @@ analyse() {
   fi
 
 }
+usage() {
+
+  banner
+
+  cat << EO_USAGE
+Usage: domaindle [options]
+Options:
+-h (--help)                    Show this help text
+-c (--clue)                    Display a clue that hints at the domain to guess
+-m (--mode) <easy|normal|hard> Mode (affects guesses allowed, normal is default)
+
+For more info see https://github.com/qmacro/domaindle
+EO_USAGE
+}
+
+process_options() {
+
+  while [[ $# -gt 0 ]]; do
+
+    case $1 in
+      -h | --help)
+        usage && exit 0
+        ;;
+      -c | --clue)
+        showclue=true
+        ;;
+      -m | --mode)
+        shift
+        case $1 in
+          easy) guess_limit=$guess_limit_easy ;;
+          normal) guess_limit=$guess_limit_normal ;;
+          hard) guess_limit=$guess_limit_hard ;;
+          *) usage && exit 1 ;;
+        esac
+        ;;
+      *)
+        usage && exit 1
+        ;;
+    esac
+    shift
+  done
+
+}
 
 main() {
 
   local domain_data selected_idx selected non_green colour longform description
   local guess_number=0 guess="     "
+
+  # Handle options like mode and clue
+  process_options "$@"
 
   # Read domain data from CSV file, each entry is domain,long form,description
   mapfile -t domain_data < $domains_file
@@ -109,7 +163,7 @@ main() {
   banner
 
   # Show clue if requested
-  if [[ $1 == '-c' || $1 == '--clue' ]]; then
+  if [[ -n $showclue ]]; then
     echo -e "Clue: a domain that represents the concept of '$description'\n"
   fi
 
