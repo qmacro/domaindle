@@ -2,7 +2,7 @@ AUART,Auftragsart,Sales order type
 BUKRS,Buchungkreis,Company code
 DMBTR,Deutschmarkbetrag,Amount in local currency
 EBELN,Einkaufsbelegnummer,Purchasing document number
-EBELP,Einkaugsbelegposition,Purchasing document item
+EBELP,Einkaufsbelegposition,Purchasing document item
 FLDGP,Feldgruppe zur Gruppierung von einzelnen Feldern,Field group for grouping individual fields
 FLMNG,Fehlmenge der Komponente im Auftrag,Shortfall Quantity of Component in Order
 KNTNR,Knotennummer,Node Number
