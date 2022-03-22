@@ -3,3 +3,12 @@ WAERS,Waehrungsschluessel,Currency key
 AUART,Auftragsart,Sales order type
 MANDT,Mandant,Client
 LOEKZ,Loeschkennzeichen,Deletion flag
+MATKZ,Materialzuordnung,Material Allocation
+KNTNR,Knotennummer,Node Number
+PLNME,Planmengeneinheit,Task List Unit of Measure
+TXTKZ,Langtext vorhanden,Long Text Exists
+FLDGP,Feldgruppe zur Gruppierung von einzelnen Feldern,Field group for grouping individual fields
+LOSGR,Planlosgrösse,Planned lot size
+PLNTX,Beschreibung des Plantypen,Description of the Task List Type
+FLMNG,Fehlmenge der Komponente im Auftrag,Shortfall Quantity of Component in Order
+XUSER,Benutzername,User Name
