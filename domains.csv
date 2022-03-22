@@ -2,6 +2,7 @@ ANLAZ,Anlagezustand,System Condition
 ARBPL,Arbeitsplatz,Work Centre
 AUART,Auftragsart,Sales order type
 BUKRS,Buchungkreis,Company code
+CHAR1,Character 1,One-character field without check
 EBELN,Einkaufsbelegnummer,Purchasing document number
 EBELP,Einkaufsbelegposition,Purchasing document item
 EQART,Art des technishen Objekts,Type of technical objects
