@@ -2,7 +2,6 @@
 
 set -eo pipefail
 
-declare domains_file=domains.csv
 declare reveal_delay=0.3
 declare green=22 yellow=33 white=70
 declare alphabet=ABCDEFGHIJKLMNOPQRSTUVWXYZ
@@ -15,10 +14,14 @@ declare guess_limit_hard=6
 # Default mode is 'normal' and no clue shown
 declare guess_limit=$guess_limit_normal
 declare showclue=
+declare type=domain
+declare types_file=domains.csv
 
 trap exit INT
 
 banner() {
+
+  local type=$1
 
   cat << EOF
  ____                        _           _ _
@@ -26,7 +29,7 @@ banner() {
 | | | |/ _ \| '_  '_ \ / _' | | '_ \ / _' | |/ _ \\
 | |_| | (_) | | | | | | (_| | | | | | (_| | |  __/
 |____/ \___/|_| |_| |_|\__,_|_|_| |_|\__,_|_|\___|
-Domaindle - Guess 5-letter domains from the Data Dictionary!
+Domaindle - Guess ${type}s from the Data Dictionary!
 
 EOF
 
@@ -34,10 +37,11 @@ EOF
 
 explain() {
 
-  local domain=$1
-  local longform=$2
-  local description=$3
-  echo "Domain '$domain' is short for '$longform' and represents '$description'."
+  local type=$1
+  local item=$2
+  local longform=$3
+  local description=$4
+  echo "${type^} '$item' is '$longform' and represents '$description'."
 
 }
 
@@ -100,15 +104,14 @@ analyse() {
 }
 usage() {
 
-  banner
-
   cat << EO_USAGE
 Usage: domaindle [options]
 Options:
 -h (--help)                    Show this help text
--c (--clue)                    Display a clue that hints at the domain to guess
--m (--mode) <easy|normal|hard> Mode (affects guesses allowed, normal is default)
-
+-c (--clue)                    Display a clue that hints at the type to guess
+-m (--mode) easy|normal|hard   Mode (affects guesses allowed); default: normal
+-t (--type) <type>             Specify type of dictionary item; default: domain
+Dictionary types supported: domain, table.
 For more info see https://github.com/qmacro/domaindle
 EO_USAGE
 }
@@ -133,6 +136,14 @@ process_options() {
           *) usage && exit 1 ;;
         esac
         ;;
+      -t | --type)
+        shift
+        type=$1
+        case $type in
+          domain | dataelement | table) types_file="${type}s.csv" ;;
+          *) usage && exit 1 ;;
+        esac
+        ;;
       *)
         usage && exit 1
         ;;
@@ -144,47 +155,47 @@ process_options() {
 
 main() {
 
-  local domain_data selected_idx selected non_green colour longform description
-  local guess_number=0 guess="     "
+  local type_data type_detail selected_idx selected non_green colour longform description
+  local guess_number=0 guess="_____"
 
-  # Handle options like mode and clue
+  # Handle options like mode, clue and type
   process_options "$@"
 
-  # Read domain data from CSV file, each entry is domain,long form,description
-  mapfile -t domain_data < $domains_file
+  # Read type data from CSV file, each entry is type,long form,description
+  mapfile -t type_data < "$types_file"
 
-  # Select a random index into the domain data and use that to select a domain
-  selected_idx=$((RANDOM % ${#domain_data[@]}))
-  domain_detail=${domain_data[$selected_idx]}
-  IFS=, read -r selected longform description <<< "$domain_detail"
+  # Select a random index into the type data and use that to select a domain
+  selected_idx=$((RANDOM % ${#type_data[@]}))
+  type_detail=${type_data[$selected_idx]}
+  IFS=, read -r selected longform description <<< "$type_detail"
   selected="${selected^^}"
 
   # Show banner
-  banner
+  banner "$type"
 
   # Show clue if requested
   if [[ -n $showclue ]]; then
-    echo -e "Clue: a domain that represents the concept of '$description'\n"
+    echo -e "Clue: a $type that represents the concept of '$description'\n"
   fi
 
   until [[ guess_number -ge guess_limit ]]; do
 
     if analyse "$selected" "$guess"; then
       echo
-      explain "$selected" "$longform" "$description"
+      explain "$type" "$selected" "$longform" "$description"
       exit 0
     fi
 
-    # Receive guess, uppercase and pad to 5 chars
+    # Receive guess, uppercase and pad / reduce to length of selected item
     guess_number=$((guess_number + 1))
     read -rp "Guess $guess_number/$guess_limit: " guess
-    guess="${guess^^}     "
-    guess="${guess:0:5}"
+    guess="${guess^^}                  "
+    guess="${guess:0:${#selected}}"
 
   done
 
-  echo "Sorry, you didn't manage to guess, the domain was '$selected'."
-  explain "$selected" "$longform" "$description"
+  echo "Sorry, you didn't manage to guess, the $type was '$selected'."
+  explain "$type" "$selected" "$longform" "$description"
   exit 1
 
 }
