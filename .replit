@@ -1,2 +1,2 @@
 language = "bash"
-run = "./domaindle --clue --mode easy --type table"
+run = "./domaindle --clue --mode easy"
