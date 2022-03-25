@@ -1,2 +1,8 @@
 EKKO,Einkaufsbeleg - Kopf,Purchasing document header
 EKPO,Einkaufsbeleg - Position,Purchasing document item
+BKPF,Belegkopf,Accounting document header
+BSEG,Belegsegment,Accounting document segment
+EBAN,Einkauf - Bestellanforderung,Purchase requisition
+KONH,Konditionen - Header,Conditions - header
+KONP,Konditionen - Position,Conditions - position
+NAST,Nachrichtensteuerung,Message control
